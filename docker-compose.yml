@@ -8,6 +8,23 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
       - NODE_ENV=${NODE_ENV}
+      - JWT_SECRET=${JWT_SECRET}
+      - MAX_BOOKING_HOURS=${MAX_BOOKING_HOURS}
+      - MAX_BOOKING_DAYS=${MAX_BOOKING_DAYS}
+      - MAX_CONCURRENT_BOOKINGS=${MAX_CONCURRENT_BOOKINGS}
+      - BOOKING_GRACE_MINUTES=${BOOKING_GRACE_MINUTES}
+    depends_on:
+      - db
+      - redis
+  worker:
+    build: .
+    command: npm run worker
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - NODE_ENV=${NODE_ENV}
+      - JWT_SECRET=${JWT_SECRET}
+      - BOOKING_GRACE_MINUTES=${BOOKING_GRACE_MINUTES}
     depends_on:
       - db
       - redis

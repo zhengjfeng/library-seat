@@ -23,12 +23,15 @@ Quick start (development):
 
 API endpoints:
 - GET /api/health
-- POST /api/bookings  { user_id, seat_id, start_at, end_at }
-- POST /api/bookings/:id/cancel
-- GET /api/bookings?user_id=1
+- POST /api/auth/register { account_id, name, email, password }
+- POST /api/auth/login { account_id, password }
+- POST /api/bookings  { seat_id, start_at, end_at } (requires Authorization: Bearer <token>)
+- POST /api/bookings/:id/cancel (requires auth)
+- POST /api/bookings/:id/checkin (requires auth)
+- GET /api/bookings (requires auth)
 
 Notes & next steps:
-- Add authentication (JWT/SSO)
 - Add more endpoints: rooms, seats, admin UI
-- Add background worker to handle check-in/timeout and reminders
-- Add tests
+- Add notifications (email/sms/push)
+- Add background worker to handle check-in/timeout and reminders (already included as npm run worker)
+- Add tests and CI
